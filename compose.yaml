@@ -48,7 +48,6 @@
 # secrets:
 #   db-password:
 #     file: db/password.txt
-version: "3.8"
 
 services:
   app:
