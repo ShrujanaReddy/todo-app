@@ -1,4 +1,4 @@
 const app=require("./app")
-app.listen(5000, () => {
-    console.log("Started a server at port 5000")
+app.listen(8000, () => {
+    console.log("Started a server at port 8000")
 })
