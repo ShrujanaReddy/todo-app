@@ -12,12 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.10.0"
+        uses: actions/checkout@v4.1.6
 
       - name: Build Docker image
         run: cd todo-app && docker-compose build
