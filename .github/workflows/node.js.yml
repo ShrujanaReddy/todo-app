@@ -14,25 +14,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
       - name: Build Docker image
         run: cd todo-app && docker-compose build
 
       - name: Run Docker Compose file
-        run: cd todo-app && docker-compose up -d & sleep 5
+        run: cd todo-app && docker-compose up -d && sleep 10
 
       - name: Run unit tests
-        run: cd todo-app && docker-compose run app npm test
+        run: cd todo-app && docker-compose run --rm app npm test
 
       - name: Run integration tests
         run: |
           cd todo-app  
-          docker-compose run app npx sequelize-cli db:drop  
-          docker-compose run app npx sequelize-cli db:create  
-          docker-compose run app npx sequelize-cli db:migrate  
-          docker-compose run app npm run start:dev &  
-          sleep 5  
-          docker-compose run app npm install cypress cypress-json-results  
-          docker-compose run app npx cypress run
+          docker-compose run --rm app npx sequelize-cli db:drop  
+          docker-compose run --rm app npx sequelize-cli db:create  
+          docker-compose run --rm app npx sequelize-cli db:migrate  
+          docker-compose run --rm app npm run start:dev &
+          sleep 10  
+          docker-compose run --rm app npm install cypress cypress-json-results  
+          docker-compose run --rm app npx cypress run
 
       - name: Stop and remove Docker containers
         run: cd todo-app && docker-compose down
@@ -51,7 +56,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker todo-app:latest
+            docker pull your-docker-repo/todo-app:latest
             docker stop todo-app || true
             docker rm todo-app || true
-            docker run -d --name todo-app -p 80:80 todo-app:latest
+            docker run -d --name todo-app -p 80:80 your-docker-repo/todo-app:latest
