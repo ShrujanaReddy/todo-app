@@ -28,9 +28,9 @@ services:
     volumes:
       - pg-dev-data:/var/lib/postgresql/data
     environment:
-      DB_USER: ${{ secrets.DB_USER }}
-      DEV_DATABASE: ${{ secrets.DEV_DATABASE }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USER: $${{ secrets.DB_USER }}
+      DEV_DATABASE: $${{ secrets.DEV_DATABASE }}
+      DB_PASSWORD: $${{ secrets.DB_PASSWORD }}
     # env_file:
     #   - .env
     # environment:
