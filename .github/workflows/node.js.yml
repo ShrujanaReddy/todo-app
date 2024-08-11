@@ -26,6 +26,9 @@ jobs:
       - name: Run Docker Compose file
         run: docker compose up -d && sleep 10
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Run unit tests
         run: npm test
 
