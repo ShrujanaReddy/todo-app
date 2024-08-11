@@ -1,6 +1,6 @@
-let studentSubmissionUrl = "http://localhost:5000";
-if (studentSubmissionUrl.endsWith("/")) {
-  studentSubmissionUrl = studentSubmissionUrl.slice(0, -1);
+let url = "http://0.0.0.0:8000";
+if (url.endsWith("/")) {
+  url = url.slice(0, -1);
 }
 const clearSignUpFields = (cy) => {
   cy.get('input[name="firstName"]').clear();
@@ -37,7 +37,7 @@ const password = "123456789";
 
 describe("Testing all the features", () => {
   it("should not create an account with empty email, password, or firstName", () => {
-    cy.visit(studentSubmissionUrl + "/signup");
+    cy.visit(url + "/signup");
     cy.get('input[name="firstName"]').should("exist");
     cy.get('input[name="email"]').should("exist");
     cy.get('input[name="password"]').should("exist");
@@ -90,7 +90,7 @@ describe("Testing all the features", () => {
   });
 
   it("should visit signup path and create an account", () => {
-    cy.visit(studentSubmissionUrl + "/signup");
+    cy.visit(url + "/signup");
     cy.get('input[name="firstName"]').should("exist");
     cy.get('input[name="email"]').should("exist");
     cy.get('input[name="password"]').should("exist");
@@ -108,7 +108,7 @@ describe("Testing all the features", () => {
     });
   });
   it("should not login with invalid credentials", () => {
-    cy.visit(studentSubmissionUrl + "/login");
+    cy.visit(url + "/login");
     clearLoginFields(cy);
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type("inv@lid");
@@ -122,7 +122,7 @@ describe("Testing all the features", () => {
 
 describe("Verify the todo list functions properly,", () => {
   beforeEach(() => {
-    cy.visit(studentSubmissionUrl + "/login");
+    cy.visit(url + "/login");
     clearLoginFields(cy);
     cy.get('input[name="email"]').type(email);
     cy.get('input[name="password"]').type(password);
@@ -242,7 +242,7 @@ describe("Verify the todo list functions properly,", () => {
 
   it("Should redirect to `/todos` page when a logged in user visits root url", () => {
     clearFields(cy);
-    cy.visit(studentSubmissionUrl);
+    cy.visit(url);
     cy.wait(500);
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq("/todos");
@@ -252,7 +252,7 @@ describe("Verify the todo list functions properly,", () => {
 
 describe("Verify the todos of a user is not accessible for other users", () => {
   it("should login as another user and shouldn't see todos of other users", () => {
-    cy.visit(studentSubmissionUrl + "/signup");
+    cy.visit(url + "/signup");
     cy.get('input[name="firstName"]').should("exist");
     cy.get('input[name="email"]').should("exist");
     cy.get('input[name="password"]').should("exist");
