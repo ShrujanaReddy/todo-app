@@ -1,19 +1,17 @@
-# Dockerfile
-FROM node:14
+FROM --platform=$BUILDPLATFORM node:lts-alpine as base
 
 WORKDIR /app
+COPY package*.json /
+EXPOSE 8000
 
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-# Set environment variables
-ENV DB_HOST=127.0.0.1
-ENV DB_USERNAME=postgres
-ENV DB_PASSWORD=shrujana
-ENV DB_DATABASE=wd-todo-test
-ENV DB_DIALECT=postgres
-
-# Command to run tests
-CMD ["npm", "test"]
+FROM base as production  
+ENV NODE_ENV=production  
+RUN npm install  
+COPY . /app  
+CMD node index.js  
+  
+FROM base as dev  
+ENV NODE_ENV=development  
+RUN npm install -g nodemon && npm install  
+COPY . /app  
+CMD npm run start
