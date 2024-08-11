@@ -16,6 +16,10 @@ jobs:
 
       - name: Build Docker image
         run: docker compose build
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
 
       - name: Run Docker Compose file
         run: |
