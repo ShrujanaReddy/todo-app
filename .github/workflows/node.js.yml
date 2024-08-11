@@ -18,7 +18,9 @@ jobs:
         run: docker compose build
 
       - name: Run Docker Compose file
-        run: docker compose up -d && sleep 10
+        run: |
+          docker compose up -d && sleep 20
+          docker compose ps
 
       - name: Run unit tests
         run: docker compose exec app npm test
