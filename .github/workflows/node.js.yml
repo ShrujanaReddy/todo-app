@@ -43,13 +43,15 @@ jobs:
 
       - name: Run integration tests
         uses: cypress-io/github-action@v6
-        env:
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
-        run: |
-          docker compose exec app npm install cypress cypress-json-results
-          docker compose exec app npx cypress run
+        with:
+          start: npm start
+        # env:
+        #   POSTGRES_USER: ${{ secrets.DB_USER }}
+        #   POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        #   POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
+        # run: |
+        #   docker compose exec app npm install cypress cypress-json-results
+        #   docker compose exec app npx cypress run
 
       # - name: Setup SSH
       #   run: |
