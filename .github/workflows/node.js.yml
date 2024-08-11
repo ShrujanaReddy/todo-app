@@ -47,10 +47,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
         run: |
-          docker compose exec app npx sequelize-cli db:create
-          docker compose exec app npx sequelize-cli db:drop
-          docker compose exec app npx sequelize-cli db:migrate
-          docker compose exec app npm run start:dev & sleep 10
           docker compose exec app npm install cypress cypress-json-results
           docker compose exec app npx cypress run
 
