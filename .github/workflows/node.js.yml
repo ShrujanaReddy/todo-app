@@ -47,6 +47,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
         run: |
+          sudo apt-get update && sudo apt-get install -y xvfb
+          Xvfb :99 -screen 0 1280x720x24 &
           docker compose exec app npm install cypress cypress-json-results
           docker compose exec app npx cypress run
 
