@@ -42,12 +42,12 @@ jobs:
         run: docker compose exec app npm test
 
       - name: Run integration tests
+        uses: cypress-io/github-action@v6
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
         run: |
-          apt-get install libgtk2.0-0t64 libgtk-3-0t64 libgbm-dev libnotify-dev libnss3 libxss1 libasound2t64 libxtst6 xauth xvfb
           docker compose exec app npm install cypress cypress-json-results
           docker compose exec app npx cypress run
 
