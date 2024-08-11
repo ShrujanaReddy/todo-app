@@ -7,10 +7,10 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "shrujana",
-    "database": "wd-todo-test",
-    "host": "db",
+    "username": "${POSTGRES_USER}",
+    "password": "${POSTGRES_PASSWORD}",
+    "database": "${POSTGRES_DATABASE}",
+    "host": "db",  
     "dialect": "postgres"
   },
   "production": {

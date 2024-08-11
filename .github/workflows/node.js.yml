@@ -35,6 +35,10 @@ jobs:
           docker compose logs app
 
       - name: Run unit tests
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
         run: docker compose exec app npm test
 
       - name: Run integration tests
