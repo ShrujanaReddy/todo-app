@@ -21,6 +21,8 @@ jobs:
         run: |
           docker compose up -d && sleep 20
           docker compose ps
+          docker compose logs db
+          docker compose logs app
 
       - name: Run unit tests
         run: docker compose exec app npm test
