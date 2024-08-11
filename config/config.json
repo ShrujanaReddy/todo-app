@@ -10,7 +10,7 @@
     "username": "postgres",
     "password": "shrujana",
     "database": "wd-todo-test",
-    "host": "db",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {

@@ -1,34 +1,40 @@
-services:
-  app:
-    build:
-      context: .
-      target: dev
-    image: todo-app:development
-    volumes:
-      - .:/app
-    ports:
-      - 8000:8000
-    command: ["./wait-for-it.sh", "db:5432", "--", "npm", "test"]
-    # env_file:
-    #   - .env
-    depends_on:
-      - db
+name: CI/CD Pipeline
 
-  db:
-    image: postgres:15
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - pg-dev-data:/var/lib/postgresql/data
-    # env_file:
-    #   - .env
-    # environment:
-    #   POSTGRES_USER: $DB_USER
-    #   POSTGRES_DB: $DEV_DATABASE
-    #   POSTGRES_PASSWORD: $DB_PASSWORD
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-volumes:
-  pg-dev-data:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: shrujana
+          POSTGRES_DB: wd-todo-test
+        ports:
+          - 5432:5432
+        options: >
+          --health-cmd="pg_isready -U postgres" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t my-app-test .
+
+      - name: Wait for PostgreSQL to be ready
+        run: until docker run --network=host --rm my-app-test pg_isready -h 127.0.0.1 -p 5432 -U postgres; do echo "Waiting for postgres..."; sleep 1; done
+
+      - name: Run Jest tests in Docker
+        run: docker run --network=host --rm my-app-test
