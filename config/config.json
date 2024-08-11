@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "shrujana" ,
-    "database": "wd-todo-dev",
+    "database": "todo-dev-cicd",
     "host": "db",
     "dialect": "postgres"
   },
