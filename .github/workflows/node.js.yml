@@ -27,20 +27,16 @@ jobs:
         run: docker compose up -d && sleep 10
 
       - name: Run unit tests
-        run: |
-          docker compose up -d  
-          docker compose exec app npm test  
-          docker compose down
+        run: docker compose exec app npm test
 
       - name: Run integration tests
         run: |
-          npx sequelize-cli db:drop  
-          npx sequelize-cli db:create  
-          npx sequelize-cli db:migrate  
-          npm run start:dev &
-          sleep 10  
-          npm install cypress cypress-json-results  
-          npx cypress run
+          docker compose exec app npx sequelize-cli db:create  
+          docker compose exec app npx sequelize-cli db:drop  
+          docker compose exec app npx sequelize-cli db:migrate  
+          docker compose exec app npm run start:dev & sleep 10  
+          docker compose exec app npm install cypress cypress-json-results  
+          docker compose exec app npx cypress run
 
       - name: Setup SSH
         run: |
