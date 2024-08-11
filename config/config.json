@@ -7,9 +7,9 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "${POSTGRES_USER}",
-    "password": "${POSTGRES_PASSWORD}",
-    "database": "${POSTGRES_DATABASE}",
+    "username": "postgres",
+    "password": "shrujana",
+    "database": "todo-dev-cicd",
     "host": "db",  
     "dialect": "postgres"
   },
