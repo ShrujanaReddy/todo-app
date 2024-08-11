@@ -12,9 +12,9 @@ services:
     # env_file:
     #   - .env
     environment:
-      DB_USER: ${{ secrets.DB_USER }}
-      DEV_DATABASE: ${{ secrets.DEV_DATABASE }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USER: $${{ secrets.DB_USER }}
+      DEV_DATABASE: $${{ secrets.DEV_DATABASE }}
+      DB_PASSWORD: $${{ secrets.DB_PASSWORD }}
     depends_on:
       - db
 
