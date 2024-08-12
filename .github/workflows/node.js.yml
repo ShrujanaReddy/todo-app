@@ -63,7 +63,7 @@ jobs:
         run: |
           echo "Pushing Docker image to Docker Hub..."
           docker tag todo-app:development ${{ secrets.DOCKER_USERNAME }}/todo-app:development
-          docker push ${DOCKER_USERNAME}/todo-app:development
+          docker push ${{ secrets.DOCKER_USERNAME }}/todo-app:development
 
       # - name: Setup SSH
       #   run: |
