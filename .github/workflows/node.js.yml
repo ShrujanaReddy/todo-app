@@ -65,6 +65,16 @@ jobs:
           docker tag todo-app:development ${{ secrets.DOCKER_USERNAME }}/todo-app:development
           docker push ${{ secrets.DOCKER_USERNAME }}/todo-app:development
 
+      - name: Post Success Notification to Slack
+        if: success() # Only runs if previous steps succeed
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Pipeline succeeded! All steps completed successfully."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Post Failure Notification to Slack
+        if: failure() # Only runs if previous steps failed
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Pipeline failed."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
       # - name: Setup SSH
       #   run: |
       #     mkdir -p ~/.ssh
