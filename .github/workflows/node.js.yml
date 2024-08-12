@@ -21,7 +21,7 @@ jobs:
           POSTGRES_DATABASE: ${{ secrets.DEV_DATABASE }}
         run: |
           echo "POSTGRES_USER=${POSTGRES_USER}"
-          docker compose build -t todo
+          docker compose build
 
       - name: Run Docker Compose file
         env:
@@ -62,8 +62,8 @@ jobs:
       - name: Push Docker image to Docker Hub (Deployment to server)
         run: |
           echo "Pushing Docker image to Docker Hub..."
-          docker tag myapp/todo:latest ${DOCKER_USERNAME}/todo:latest
-          docker push ${DOCKER_USERNAME}/todo:latest
+          docker tag myapp/todo-app:latest ${DOCKER_USERNAME}/todo-app:latest
+          docker push ${DOCKER_USERNAME}/todo-app:latest
 
       # - name: Setup SSH
       #   run: |
