@@ -67,7 +67,6 @@ jobs:
             -e DB_PASSWORD=$DB_PASSWORD \
             --name todo \
             todo
-        debug: true
 
       # - name: Setup SSH
       #   run: |
