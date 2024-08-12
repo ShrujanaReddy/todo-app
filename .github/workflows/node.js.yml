@@ -71,6 +71,7 @@ jobs:
             docker stop todo-app || true
             docker rm todo-app || true
             docker run -d --name todo-app -p 80:80 todo-app:latest
+          debug: true
 
       - name: Stop and remove Docker containers
         run: docker compose down
